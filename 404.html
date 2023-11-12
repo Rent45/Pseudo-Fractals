@@ -12,12 +12,12 @@
     }
 
     #settings {
-      padding: 40px;
+      padding: 33px;
       box-sizing: border-box;
       background-color: #f4f4f4;
       border: 1px solid #ddd;
       border-radius: 5px;
-      margin-right: 20px;
+      margin-right: -133px;
     }
 
     label {
@@ -131,8 +131,8 @@
       for (let d = 0; d <= 2; d++) {
         let targetElem = document.getElementById(colors[d] + j + j);
         targetElem.style.color = `rgb(${redVal}, ${greenVal}, ${blueVal})`;
-        console.log(targetElem.style.color);
-        console.log(targetElem);
+        // console.log(targetElem.style.color);
+        // console.log(targetElem);
       };
     }
   }
@@ -149,10 +149,18 @@
       pixelDensity(1);
       textSize(15);
     };
-    function randomColor(i,j) {
-      let colors = ["Blue","Red","Green"];
-      document.getElementById(colors[i]+j).value = Math.round(10*255*Math.random())/10;
-    };
+    function randomColor(i, j) {
+      let colors = ["Blue", "Red", "Green"];
+      let input = document.getElementById(colors[i] + j);
+      input.value = Math.round(10 * 255 * Math.random()) / 10;
+      for (let d = 0; d <= 2; d++) {
+        let redVal = parseInt(document.getElementById('Red' + j).value);
+        let greenVal = parseInt(document.getElementById('Green' + j).value);
+        let blueVal = parseInt(document.getElementById('Blue' + j).value);
+        let targetElem = document.getElementById(colors[d] + j + j);
+        targetElem.style.color = `rgb(${redVal}, ${greenVal}, ${blueVal})`;
+      }
+    }
     function randomWidth() {
       document.getElementById('widthInput').value = Math.floor(Math.random()*3000);
     };
@@ -203,8 +211,6 @@
     }
 
     function ChangeCanvas() {
-      console.log(textValy.length);
-      console.log(textValx.length);
       for (let i=textValx.length; i>=0; i--){
           if (counter>1) {
                 textValx.shift();
@@ -217,8 +223,6 @@
                 importanty.shift();
           };
         };
-      console.log(textValy.length);
-      console.log(textValx.length);
       resizeCanvas(width, height);
       loadPixels();
 
@@ -296,10 +300,11 @@
             }
             }
             if (x==width/2) {
-            console.log(x+" "+width/2)}
+            // console.log(x+" "+width/2)
+          }
             if (x == width / 2 && y > 0 && y < height - 20 && y%100==0) {
             let mapped = map(y + 100, 0, height, -1, 1) / zoom - map(y, 0, height, -1, 1) / zoom; 
-            console.log(mapped)          
+            // console.log(mapped)          
             for (let k = -5; k <= 5; k++) {
               if (mapped <= 10 ** k) {
                 // textAlign(LEFT);
@@ -372,5 +377,7 @@
 
 
   </script>
+</body>
+</html>
 </body>
 </html>
