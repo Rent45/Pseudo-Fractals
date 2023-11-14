@@ -10,7 +10,6 @@
       padding: 0;
       display: flex;
     }
-
       main{
         position: relative;
         left: 150px;
@@ -60,11 +59,15 @@
   <button onclick="randomise()">Randomise</button>
   <button onclick="visualise()">Visualise</button>
   <br>
-  <select id="functionSelector">
+  <select id="functionSelector" onchange="if($(document.getElementById('FuncVar')).is(':hidden') && document.getElementById('functionSelector').value == 'nPowerZ'){$('#FuncVar').show();}else {$('#FuncVar').hide().hide();};">
     <option value="zSquared">z^2</option>
     <option value="sinZ">sin(z)</option>
     <option value="cosZ">cos(z)</option>
+    <option value="ePowerZ">e^z</option>
+    <option value="nPowerZ">n^z</option>
     <option value="zPowerZ">z^z</option>
+    <option value="sinhz">sinhz</option>
+    <option value="cosh">coshz</option>
   </select>
 
   <select id="signSelector">
@@ -72,7 +75,10 @@
     <option value="minus">-</option>
     <option value="multiply">*</option>
     <option value="divide">/</option>
+    <option value="power">^</option>
   </select>
+  <br>
+  <input type="text" id="FuncVar" placeholder="Enter the n" hidden>
   <br>
   <label onclick="randomWidth();" for="widthInput">Picture Width:</label>
   <input type="number" id="widthInput" value="750">
@@ -122,6 +128,7 @@
   <label id="Blue33" onclick="randomColor(0,3);" for="Blue3">In set, blue colour:</label>
   <input type="number" id="Blue3" value="75">
   </div>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
   <script>
     for (let i = 2; i >= 0; i--) {
@@ -140,7 +147,6 @@
       };
     }
   }
-    //selectedFunction = parseFloat(document.getElementById('functionSelector').value);
     let width = parseInt(document.getElementById('widthInput').value);
     let height = parseInt(document.getElementById('heightInput').value);
     let textValx = [];
@@ -148,6 +154,8 @@
     let importantx = [];
     let importanty = [];
     let counter = 0;
+    let selectedFunction = document.getElementById('functionSelector').value;
+    console.log(selectedFunction)
     function setup() {
       let canvas = createCanvas(width, height);
       pixelDensity(1);
@@ -178,7 +186,7 @@
       document.getElementById('MaxIt').value = Math.floor(Math.random()*60);
     };
     function randomZoom() {
-      document.getElementById('ZoomInput').value = Math.round(100*(Math.random() * (25) - 5))/100;
+      document.getElementById('ZoomInput').value = Math.round(100*(Math.random() * (20)))/100;
     };
     function randomX() {
       document.getElementById('XInput').value = Math.round(100*(Math.random() * (4) - 2))/100;
@@ -187,10 +195,10 @@
       document.getElementById('YInput').value = Math.round(100*(Math.random() * (4) - 2))/100;
     };
     function randomise() {
-      let funcs = ["zSquared","zPowerZ","sinZ","cosZ"];
-      document.getElementById('functionSelector').value = funcs[Math.floor(Math.random()*4)];
-      let signs = ["plus","minus","multiply","divide"];
-      document.getElementById('signSelector').value = signs[Math.floor(Math.random()*4)];
+      let funcs = ["zSquared","zPowerZ","sinZ","cosZ","ePowerZ","nPowerZ","sinhz","coshz"];
+      document.getElementById('functionSelector').value = funcs[Math.floor(Math.random()*8)];
+      let signs = ["plus","minus","multiply","divide",'power'];
+      document.getElementById('signSelector').value = signs[Math.floor(Math.random()*5)];
       randomWidth();
       randomHeight();
       randomMaxV();
@@ -198,37 +206,18 @@
       randomZoom();
       randomX();
       randomY();
+      if($(document.getElementById('FuncVar')).is(':hidden') && document.getElementById('functionSelector').value == 'nPowerZ'){$('#FuncVar').show();
+      document.getElementById('FuncVar').value = Math.round(10*(Math.random()*30-10))/10;}else {$('#FuncVar').hide().hide();};
       for (var i = 0; i <= 2; i++) {
         for (var j = 1; j <= 3; j++) {
           randomColor(i,j)
         }
       }
     }
-    function visualise() {
-      counter++;
-      clear();
-      selectedFunction = document.getElementById('functionSelector').value;
-      selectedSign = document.getElementById('signSelector').value;
-      width = parseInt(document.getElementById('widthInput').value);
-      height = parseInt(document.getElementById('heightInput').value);
-      ChangeCanvas(); // Trigger draw() function again
-    }
-
     function ChangeCanvas() {
-      for (let i=textValx.length; i>=0; i--){
-          if (counter>1) {
-                textValx.shift();
-                importantx.shift();
-          };
-        };
-        for (let i=textValy.length; i>=0; i--){
-          if (counter>1) {
-                textValy.shift();
-                importanty.shift();
-          };
-        };
       resizeCanvas(width, height);
       loadPixels();
+      clear();
 
       for (let x = 0; x <= width; x++) {
         for (let y = 0; y <= height; y++) {
@@ -240,31 +229,49 @@
           while (Math.abs(a)+Math.abs(b) <= parseFloat(document.getElementById('MaxVal').value) && n < parseFloat(document.getElementById('MaxIt').value)) {
             n++;
             let aa, bb;
+            selectedFunction = document.getElementById('functionSelector').value;
+            // console.log(selectedFunction)
+            // console.log(selectedSign)
             if (selectedFunction=="sinZ"){
-              aa = Math.sin(a) * (Math.exp(b) + Math.exp(-b)) / 2;
-              bb = Math.cos(a)*(-Math.exp(-b)+Math.exp(b))/2;
+              aa = (Math.sin(a))*(Math.cosh(b));
+              bb = (Math.cos(a))*(Math.sinh(b));
             } else if (selectedFunction=="cosZ"){
-                aa = Math.cos(a) * (Math.exp(b) + Math.exp(-b)) / 2;
-                bb = Math.sin(a)*(Math.exp(-b)-Math.exp(b))/2;
+              aa = (Math.cos(a))*Math.cosh(b);
+              bb = -((Math.sin(a))*(Math.sinh(b)));
             } else if (selectedFunction=="zSquared"){
-                aa = a * a - b * b;
-                bb = 2 * a * b;
+              aa = a * a - b * b;
+              bb = 2 * a * b;
             } else if (selectedFunction=="zPowerZ"){
-                aa = Math.exp(a/2*Math.log(a*a+b*b)-b*Math.atan(b/a))*Math.sin(a*Math.atan(b/a)+b/2*Math.log(a*a+b*b));
-                bb = Math.exp(a/2*Math.log(a*a+b*b)-b*Math.atan(b/a))*Math.cos(a*Math.atan(b/a)+b/2*Math.log(a*a+b*b));
+              aa = Math.exp(a/2*Math.log(a*a+b*b)-b*Math.atan(b/a))*Math.sin(a*Math.atan(b/a)+b/2*Math.log(a*a+b*b));
+              bb = Math.exp(a/2*Math.log(a*a+b*b)-b*Math.atan(b/a))*Math.cos(a*Math.atan(b/a)+b/2*Math.log(a*a+b*b));
+            } else if (selectedFunction=='ePowerZ'){
+              aa = Math.exp(a)*Math.cos(b);
+              bb = Math.exp(a)*sin(b);
+            } else if (selectedFunction=='nPowerZ'){
+              aa = ((parseFloat(document.getElementById('FuncVar').value))**(a))*Math.cos(b*Math.log(parseFloat(document.getElementById('FuncVar').value)));
+              bb = ((parseFloat(document.getElementById('FuncVar').value))**(a))*Math.sin(b*Math.log(parseFloat(document.getElementById('FuncVar').value)));
+            } else if(selectedFunction=="sinhz"){
+              aa = Math.sinh(a)*Math.cos(b);
+              bb = Math.cosh(a)*Math.sin(b);
+            } else if(selectedFunction=="coshz"){
+              aa = Math.cosh(a)*Math.cosh(b);
+              bb = Math.sinh(a)*Math.sin(b);
             };
             if (selectedSign=="plus"){
-              a = aa + ca;
-              b = bb + cb;
+              a = (aa) + (ca);
+              b = (bb) + (cb);
             } else if (selectedSign=="minus"){
-              a = aa - ca;
-              b = bb - cb;
+              a = (aa) - (ca);
+              b = (bb) - (cb);
             } else if (selectedSign=="multiply"){
-              a = aa * ca;
-              b = bb * cb;
+              a = (aa) * (ca);
+              b = (bb) * (cb);
             } else if (selectedSign=="divide"){
-              a = aa / ca;
-              b = bb / cb;
+              a = (aa) / (ca);
+              b = (bb) / (cb);
+            } else if (selectedSign=="power"){
+              a = (aa) ** (ca);
+              b = (bb) ** (cb);
             };
           }
           let pixelIndex = (x + y * width) * 4;
@@ -290,14 +297,16 @@
           height = parseInt(document.getElementById('heightInput').value);
           let zoom = parseFloat(document.getElementById('ZoomInput').value);
           if (y == height / 2 && x > 0 && x < width - 20 && x%100==0) {
-            let mapped = map(x + 100, 0, width, -width / height, width / height) / zoom - map(x, 0, width, -width / height, width / height) / zoom;           
+            let mapped = map(x + 100, 0, width, -width / height, width / height) / zoom - map(x, 0, width, -width / height, width / height) / zoom;         
+            // console.log("mapped="+mapped)            
             for (let k = -5; k <= 5; k++) {
               if (mapped <= 10 ** k) {
                 // textAlign(LEFT);
                 if (k>=1){k=0}
                 textValx.push((Math.round(10 ** (-k + 1) * (map(x, 0, width, -width / height, width / height) / zoom+parseFloat(document.getElementById('XInput').value))) / 10 ** (-k + 1)).toString());
-                // console.log('Without k x '+map(x, 0, width, -width / height, width / height) / zoom+parseFloat(document.getElementById('XInput').value));
+                // console.log('Without k x '+(map(x, 0, width, -width / height, width / height) / zoom+parseFloat(document.getElementById('XInput').value)));
                 // console.log('With k x '+Math.round(10 ** (-k + 1) * (map(x, 0, width, -width / height, width / height) / zoom+parseFloat(document.getElementById('XInput').value))) / 10 ** (-k + 1));
+                // console.log("k="+k)
                 importantx.push(x);
                 break;
               }
@@ -306,17 +315,19 @@
             if (x==width/2) {
             // console.log(x+" "+width/2)
           }
-            if (x == width / 2 && y > 0 && y < height - 20 && y%100==0) {
+            if (x == width / 2 && y !== 0 && y < height - 20 && y%100==0) {
             let mapped = map(y + 100, 0, height, -1, 1) / zoom - map(y, 0, height, -1, 1) / zoom; 
-            // console.log(mapped)          
+            // console.log("mapped="+mapped)          
             for (let k = -5; k <= 5; k++) {
               if (mapped <= 10 ** k) {
                 // textAlign(LEFT);
                 textValy.push((Math.round(10 ** (-k + 1) * (-map(y, 0, height, -1, 1) / zoom+parseFloat(document.getElementById('YInput').value))) / 10 ** (-k + 1)).toString());
-                console.log(textValy)
-                console.log('Without k y '+(map(y, 0, height, -1, 1)/zoom-parseFloat(document.getElementById('YInput').value)));
-                console.log('With k y '+(Math.round(10 ** (-k + 1) * (map(y, 0, height, -1, 1) / zoom-parseFloat(document.getElementById('YInput').value))) / 10 ** (-k + 1)).toString());
+                console.log(textValy);
+                // console.log('Without k y '+(map(y, 0, height, -1, 1)/zoom-parseFloat(document.getElementById('YInput').value)));
+                // console.log('With k y '+(Math.round(10 ** (-k + 1) * (map(y, 0, height, -1, 1) / zoom-parseFloat(document.getElementById('YInput').value))) / 10 ** (-k + 1)).toString());
+                // console.log("k="+k)
                 importanty.push(y);
+                console.log("imp "+importanty)
                 break;
               }
             }
@@ -372,13 +383,35 @@
       for (let d = 0; d <= 2; d++) {
         let targetElem = document.getElementById(colors[d] + j + j);
         targetElem.style.color = `rgb(${redVal}, ${greenVal}, ${blueVal})`;
-        console.log(targetElem.style.color);
-        console.log(targetElem);
+        // console.log(targetElem.style.color);
+        // console.log(targetElem);
       }
     });
   }
 }
 
+
+    function visualise() {
+      clear();
+      for (let i=textValx.length; i>=0; i--){
+          if (counter>1) {
+                textValx.shift();
+                importantx.shift();
+          };
+        };
+        for (let i=textValy.length; i>=0; i--){
+          if (counter>1) {
+                textValy.shift();
+                importanty.shift();
+          };
+        };
+      counter++;
+      selectedFunction = document.getElementById('functionSelector').value;
+      selectedSign = document.getElementById('signSelector').value;
+      width = parseInt(document.getElementById('widthInput').value);
+      height = parseInt(document.getElementById('heightInput').value);
+      ChangeCanvas(); // Trigger draw() function again
+    }
 
   </script>
 </body>
