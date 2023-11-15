@@ -22,7 +22,14 @@
       border-radius: 5px;
       margin-right: -133px;
     }
+    #RandomButton{
 
+    }
+    #VisualButton{
+      width: 100%;
+      letter-spacing: 4px;
+      font-size: larger;
+    }
     label {
       cursor: pointer;
       display: block;
@@ -56,8 +63,10 @@
 </head>
 <body>
   <div id="settings">
-  <button onclick="randomise()">Randomise</button>
-  <button onclick="visualise()">Visualise</button>
+  <button id='VisualButton' onclick="visualise()">Visualise</button>
+  <br>
+  <button id='RandomButton' onclick="randomise()">Randomise</button>
+  <button id='HELP' onclick="needhelp()">Help me!</button>
   <br>
   <select id="functionSelector" onchange="if($(document.getElementById('FuncVar')).is(':hidden') && document.getElementById('functionSelector').value == 'nPowerZ'){$('#FuncVar').show();}else {$('#FuncVar').hide().hide();};">
     <option value="zSquared">z^2</option>
@@ -67,7 +76,7 @@
     <option value="nPowerZ">n^z</option>
     <option value="zPowerZ">z^z</option>
     <option value="sinhz">sinhz</option>
-    <option value="cosh">coshz</option>
+    <option value="coshz">coshz</option>
   </select>
 
   <select id="signSelector">
@@ -131,6 +140,16 @@
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
   <script>
+    function needhelp() {
+      alert("Hey there, here's a brief instruction and explanation of what this website is and does.");
+      alert("Firstly, the generation is quite slow, so you can do something else while the set is generating.");
+      alert("What we are doing here is taking a complex number a+bi, applying a function to it and +/-/* etc itself to what we get.");
+      alert("We reapeat this algorithm several times (Maxt Iterations) and see if it crosses 'Max absolute value'.");
+      alert("If it doesn't cross, it is in set. The less iterations it took to cross the absolute value, the further it is from set. You can adjust all the colors.");
+      alert("From 1 to infinity zoom makes the graph bigger, from 1 to 0 - smaller.");
+      alert("By pressing the arrows on your keyboard, you can move.");
+      alert("By pressing the text, you can change the parameter near it.");
+    };
     for (let i = 2; i >= 0; i--) {
   for (let j = 3; j >= 1; j--) {
     let colors = ["Blue", "Red", "Green"];
@@ -174,10 +193,10 @@
       }
     }
     function randomWidth() {
-      document.getElementById('widthInput').value = Math.floor(Math.random()*3000);
+      document.getElementById('widthInput').value = Math.floor(Math.random()*1500+500);
     };
     function randomHeight() {
-      document.getElementById('heightInput').value = Math.floor(Math.random()*3000);
+      document.getElementById('heightInput').value = Math.floor(Math.random()*1500+500)
     };
     function randomMaxV() {
       document.getElementById('MaxVal').value = Math.round(10*Math.random()*30)/10;
@@ -186,7 +205,7 @@
       document.getElementById('MaxIt').value = Math.floor(Math.random()*60);
     };
     function randomZoom() {
-      document.getElementById('ZoomInput').value = Math.round(100*(Math.random() * (20)))/100;
+      document.getElementById('ZoomInput').value = Math.round(100*(Math.random() * 5))/100;
     };
     function randomX() {
       document.getElementById('XInput').value = Math.round(100*(Math.random() * (4) - 2))/100;
@@ -196,7 +215,8 @@
     };
     function randomise() {
       let funcs = ["zSquared","zPowerZ","sinZ","cosZ","ePowerZ","nPowerZ","sinhz","coshz"];
-      document.getElementById('functionSelector').value = funcs[Math.floor(Math.random()*8)];
+      while (true){
+      document.getElementById('functionSelector').value = funcs[Math.floor(Math.random()*9)];if(!(document.getElementById('functionSelector').value == '')){break;}};
       let signs = ["plus","minus","multiply","divide",'power'];
       document.getElementById('signSelector').value = signs[Math.floor(Math.random()*5)];
       randomWidth();
@@ -353,7 +373,7 @@
       }
       for (let i = textValy.length; i >= 0; i--) {
       fill(255);
-      text(textValy[i], width/2 + 20,importanty[i]);
+      text(textValy[i]+'i', width/2 + 20,importanty[i]);
       }
     }
     document.body.addEventListener("keydown",(ev) => {
