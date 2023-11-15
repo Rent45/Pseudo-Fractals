@@ -174,7 +174,7 @@
     let importanty = [];
     let counter = 0;
     let selectedFunction = document.getElementById('functionSelector').value;
-    console.log(selectedFunction)
+    // console.log(selectedFunction)
     function setup() {
       let canvas = createCanvas(width, height);
       pixelDensity(1);
@@ -307,7 +307,7 @@
             pixels[pixelIndex + 2] = blue(parseFloat(document.getElementById("Blue3").value));
             pixels[pixelIndex + 3] = 255;
           }
-          if (x==width/2 || y==height/2) {
+          if (x > width / 2 - 1 && x < width / 2 + 1 || y > height / 2 - 1 && y < height / 2 + 1) {
             pixels[pixelIndex] = red(0);
             pixels[pixelIndex + 1] = green(0);
             pixels[pixelIndex + 2] = blue(0);
@@ -316,10 +316,10 @@
           width = parseInt(document.getElementById('widthInput').value);
           height = parseInt(document.getElementById('heightInput').value);
           let zoom = parseFloat(document.getElementById('ZoomInput').value);
-          if (y == height / 2 && x > 0 && x < width - 20 && x%100==0) {
+          if (y > height / 2 - 5 && y < height / 2 + 5 && x > 0 && x < width - 20 && x % 100 == 0) {
             let mapped = map(x + 100, 0, width, -width / height, width / height) / zoom - map(x, 0, width, -width / height, width / height) / zoom;         
             // console.log("mapped="+mapped)            
-            for (let k = -5; k <= 5; k++) {
+            for (let k = -10; k <= 10; k++) {
               if (mapped <= 10 ** k) {
                 // textAlign(LEFT);
                 if (k>=1){k=0}
@@ -328,6 +328,7 @@
                 // console.log('With k x '+Math.round(10 ** (-k + 1) * (map(x, 0, width, -width / height, width / height) / zoom+parseFloat(document.getElementById('XInput').value))) / 10 ** (-k + 1));
                 // console.log("k="+k)
                 importantx.push(x);
+                // console.log("After push x "+textValx+" "+importantx)
                 break;
               }
             }
@@ -335,19 +336,19 @@
             if (x==width/2) {
             // console.log(x+" "+width/2)
           }
-            if (x == width / 2 && y !== 0 && y < height - 20 && y%100==0) {
+            if (x > width / 2 - 5 && x < width / 2 + 5 && y !== 0 && y < height - 20 && y % 100 == 0){
             let mapped = map(y + 100, 0, height, -1, 1) / zoom - map(y, 0, height, -1, 1) / zoom; 
             // console.log("mapped="+mapped)          
-            for (let k = -5; k <= 5; k++) {
+            for (let k = -10; k <= 10; k++) {
               if (mapped <= 10 ** k) {
                 // textAlign(LEFT);
                 textValy.push((Math.round(10 ** (-k + 1) * (-map(y, 0, height, -1, 1) / zoom+parseFloat(document.getElementById('YInput').value))) / 10 ** (-k + 1)).toString());
-                console.log(textValy);
+                // console.log(textValy);
                 // console.log('Without k y '+(map(y, 0, height, -1, 1)/zoom-parseFloat(document.getElementById('YInput').value)));
                 // console.log('With k y '+(Math.round(10 ** (-k + 1) * (map(y, 0, height, -1, 1) / zoom-parseFloat(document.getElementById('YInput').value))) / 10 ** (-k + 1)).toString());
                 // console.log("k="+k)
                 importanty.push(y);
-                console.log("imp "+importanty)
+                // console.log("After push y "+textValy+" "+importanty)
                 break;
               }
             }
@@ -412,19 +413,23 @@
 
 
     function visualise() {
+      // console.log("Before clear, before shift"+textValx+importantx+textValy+importanty)
       clear();
       for (let i=textValx.length; i>=0; i--){
-          if (counter>1) {
-                textValx.shift();
-                importantx.shift();
-          };
+        if (counter>=1) {
+          textValx.shift();
+          importantx.shift();
+          // console.log("shifted x "+textValx)
         };
-        for (let i=textValy.length; i>=0; i--){
-          if (counter>1) {
-                textValy.shift();
-                importanty.shift();
-          };
+      };
+      for (let i=textValy.length; i>=0; i--){
+        if (counter>=1) {
+          textValy.shift();
+          importanty.shift();
+          // console.log("shifted y "+textValy)
         };
+      };
+      // console.log("After clear, after shift"+textValx+" "+importantx+" "+textValy+" "+importanty)
       counter++;
       selectedFunction = document.getElementById('functionSelector').value;
       selectedSign = document.getElementById('signSelector').value;
