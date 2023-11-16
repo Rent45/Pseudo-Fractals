@@ -68,12 +68,13 @@
   <button id='RandomButton' onclick="randomise()">Randomise</button>
   <button id='HELP' onclick="needhelp()">Help me!</button>
   <br>
-  <select id="functionSelector" onchange="if($(document.getElementById('FuncVar')).is(':hidden') && document.getElementById('functionSelector').value == 'nPowerZ'){$('#FuncVar').show();}else {$('#FuncVar').hide().hide();};">
+  <select id="functionSelector" onchange="if($(document.getElementById('FuncVar')).is(':hidden') && (document.getElementById('functionSelector').value == 'nPowerZ' || document.getElementById('functionSelector').value == 'zPowerN')){$('#FuncVar').show();}else if(!(document.getElementById('functionSelector').value == 'nPowerZ' || document.getElementById('functionSelector').value == 'zPowerN')){$('#FuncVar').hide();};">
     <option value="zSquared">z^2</option>
     <option value="sinZ">sin(z)</option>
     <option value="cosZ">cos(z)</option>
     <option value="ePowerZ">e^z</option>
     <option value="nPowerZ">n^z</option>
+    <option value="zPowerN">z^n</option>
     <option value="zPowerZ">z^z</option>
     <option value="sinhz">sinhz</option>
     <option value="coshz">coshz</option>
@@ -87,7 +88,7 @@
     <option value="power">^</option>
   </select>
   <br>
-  <input type="text" id="FuncVar" placeholder="Enter the n" hidden>
+  <input type="text" id="FuncVar" placeholder="Enter n (use decimals for fractions)" hidden>
   <br>
   <label onclick="randomWidth();" for="widthInput">Picture Width:</label>
   <input type="number" id="widthInput" value="750">
@@ -110,31 +111,31 @@
   <label onclick="randomY();" for="YInput">Y Offset:</label>
   <input type="number" id="YInput" value="0">
   <br>
-  <label id="Red11" onclick="randomColor(1,1);" for="Red1">Far from set, red colour:</label>
+  <label id="Red11" onclick="randomColor(1.1);" for="Red1">Far from set, red colour:</label>
   <input type="number" id="Red1" value="0">
 
-  <label id="Green11" onclick="randomColor(2,1);" for="Green1">Far from set, green colour:</label>
+  <label id="Green11" onclick="randomColor(2.1);" for="Green1">Far from set, green colour:</label>
   <input type="number" id="Green1" value="225">
 
-  <label id="Blue11" onclick="randomColor(0,1);" for="Blue1">Far from set, blue colour:</label>
+  <label id="Blue11" onclick="randomColor(0.1);" for="Blue1">Far from set, blue colour:</label>
   <input type="number" id="Blue1" value="255">
   <br>
-  <label id="Red22" onclick="randomColor(1,2);" for="Red2">Close to set red, colour:</label>
+  <label id="Red22" onclick="randomColor(1.2);" for="Red2">Close to set red, colour:</label>
   <input type="number" id="Red2" value="255">
 
-  <label id="Green22" onclick="randomColor(2,2);" for="Green2">Close to set, green colour:</label>
+  <label id="Green22" onclick="randomColor(2.2);" for="Green2">Close to set, green colour:</label>
   <input type="number" id="Green2" value="225">
 
-  <label id="Blue22" onclick="randomColor(0,2);" for="Blue2">Close to set, blue colour:</label>
+  <label id="Blue22" onclick="randomColor(0.2);" for="Blue2">Close to set, blue colour:</label>
   <input type="number" id="Blue2" value="0">
   <br>
-  <label id="Red33" onclick="randomColor(1,3);" for="Red3">In set red, colour:</label>
+  <label id="Red33" onclick="randomColor(1.3);" for="Red3">In set red, colour:</label>
   <input type="number" id="Red3" value="0">
 
-  <label id="Green33" onclick="randomColor(2,3);" for="Green3">In set, green colour:</label>
+  <label id="Green33" onclick="randomColor(2.3);" for="Green3">In set, green colour:</label>
   <input type="number" id="Green3" value="0">
 
-  <label id="Blue33" onclick="randomColor(0,3);" for="Blue3">In set, blue colour:</label>
+  <label id="Blue33" onclick="randomColor(0.3);" for="Blue3">In set, blue colour:</label>
   <input type="number" id="Blue3" value="75">
   </div>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -149,6 +150,7 @@
       alert("From 1 to infinity zoom makes the graph bigger, from 1 to 0 - smaller.");
       alert("By pressing the arrows on your keyboard, you can move.");
       alert("By pressing the text, you can change the parameter near it.");
+      alert("Whith functions containing 'n', you can input the contant. Don't forget to use decimals for fractions (e.g. instead of 1/2 writ 0.5)");
     };
     for (let i = 2; i >= 0; i--) {
   for (let j = 3; j >= 1; j--) {
@@ -214,7 +216,7 @@
       document.getElementById('YInput').value = Math.round(100*(Math.random() * (4) - 2))/100;
     };
     function randomise() {
-      let funcs = ["zSquared","zPowerZ","sinZ","cosZ","ePowerZ","nPowerZ","sinhz","coshz"];
+      let funcs = ["zSquared","sinZ","cosZ","ePowerZ","nPowerZ","zPowerN","zPowerZ","sinhz","coshz"];
       while (true){
       document.getElementById('functionSelector').value = funcs[Math.floor(Math.random()*9)];if(!(document.getElementById('functionSelector').value == '')){break;}};
       let signs = ["plus","minus","multiply","divide",'power'];
@@ -226,8 +228,8 @@
       randomZoom();
       randomX();
       randomY();
-      if($(document.getElementById('FuncVar')).is(':hidden') && document.getElementById('functionSelector').value == 'nPowerZ'){$('#FuncVar').show();
-      document.getElementById('FuncVar').value = Math.round(10*(Math.random()*30-10))/10;}else {$('#FuncVar').hide().hide();};
+      if($(document.getElementById('FuncVar')).is(':hidden') && (document.getElementById('functionSelector').value == 'nPowerZ' || document.getElementById('functionSelector').value == 'zPowerN')){$('#FuncVar').show();
+      document.getElementById('FuncVar').value = Math.round(10*(Math.random()*30-10))/10;}else {$('#FuncVar').hide();};
       for (var i = 0; i <= 2; i++) {
         for (var j = 1; j <= 3; j++) {
           randomColor(i,j)
@@ -270,12 +272,16 @@
             } else if (selectedFunction=='nPowerZ'){
               aa = ((parseFloat(document.getElementById('FuncVar').value))**(a))*Math.cos(b*Math.log(parseFloat(document.getElementById('FuncVar').value)));
               bb = ((parseFloat(document.getElementById('FuncVar').value))**(a))*Math.sin(b*Math.log(parseFloat(document.getElementById('FuncVar').value)));
+              //-1/2 - the same as -1 ; -(1/2) gives no output; -0.5 - something fancy.
             } else if(selectedFunction=="sinhz"){
               aa = Math.sinh(a)*Math.cos(b);
               bb = Math.cosh(a)*Math.sin(b);
             } else if(selectedFunction=="coshz"){
               aa = Math.cosh(a)*Math.cosh(b);
               bb = Math.sinh(a)*Math.sin(b);
+            } else if(selectedFunction=="zPowerN"){
+              aa = ((a**2+b**2)**(parseFloat(document.getElementById('FuncVar').value)/2))*Math.cos(parseFloat(document.getElementById('FuncVar').value)*Math.atan(b/a));
+              bb = ((a**2+b**2)**(parseFloat(document.getElementById('FuncVar').value)/2))*Math.sin(parseFloat(document.getElementById('FuncVar').value)*Math.atan(b/a));
             };
             if (selectedSign=="plus"){
               a = (aa) + (ca);
