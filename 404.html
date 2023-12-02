@@ -76,6 +76,7 @@
     <option value="nPowerZ">n^z</option>
     <option value="zPowerN">z^n</option>
     <option value="zPowerZ">z^z</option>
+    <option value="zPower1Z">z^(1/z)</option>
     <option value="sinhz">sinhz</option>
     <option value="coshz">coshz</option>
   </select>
@@ -148,7 +149,7 @@
       alert("We reapeat this algorithm several times (Maxt Iterations) and see if it crosses 'Max absolute value'.");
       alert("If it doesn't cross, it is in set. The less iterations it took to cross the absolute value, the further it is from set. You can adjust all the colors.");
       alert("From 1 to infinity zoom makes the graph bigger, from 1 to 0 - smaller.");
-      alert("By pressing the arrows on your keyboard, you can move.");
+      alert("By pressing the arrows on your keyboard, you can move and by pressing '-' or '=' you can zoom in or out.");
       alert("By pressing the text, you can change the parameter near it.");
       alert("Whith functions containing 'n', you can input the contant. Don't forget to use decimals for fractions (e.g. instead of 1/2 writ 0.5)");
     };
@@ -167,7 +168,22 @@
         // console.log(targetElem);
       };
     }
-  }
+  };
+  function atan3(b,a) {
+    if(a>0){
+      return Math.atan(b/a);
+    }else if (a<0 && b>=0){
+      return (Math.PI+Math.atan(b/a));
+    } else if (a<0 && b<0){
+      return (Math.atan(b/a)-Math.PI);
+    } else if (a==0 && b>0) {
+      return (Math.PI/2);
+    } else if (a==0 && b<0){
+      return (-Math.PI/2);
+    } else {
+      return 0;
+    };
+  };
     let width = parseInt(document.getElementById('widthInput').value);
     let height = parseInt(document.getElementById('heightInput').value);
     let textValx = [];
@@ -180,7 +196,6 @@
     function setup() {
       let canvas = createCanvas(width, height);
       pixelDensity(1);
-      textSize(15);
     };
     function randomColor(i, j) {
       let colors = ["Blue", "Red", "Green"];
@@ -216,9 +231,9 @@
       document.getElementById('YInput').value = Math.round(100*(Math.random() * (4) - 2))/100;
     };
     function randomise() {
-      let funcs = ["zSquared","sinZ","cosZ","ePowerZ","nPowerZ","zPowerN","zPowerZ","sinhz","coshz"];
+      let funcs = ["zSquared","sinZ","cosZ","ePowerZ","nPowerZ","zPowerN","zPowerZ","zPower1Z","sinhz","coshz"];
       while (true){
-      document.getElementById('functionSelector').value = funcs[Math.floor(Math.random()*9)];if(!(document.getElementById('functionSelector').value == '')){break;}};
+      document.getElementById('functionSelector').value = funcs[Math.floor(Math.random()*10)];if(!(document.getElementById('functionSelector').value == '')){break;}};
       let signs = ["plus","minus","multiply","divide",'power'];
       document.getElementById('signSelector').value = signs[Math.floor(Math.random()*5)];
       randomWidth();
@@ -264,8 +279,8 @@
               aa = a * a - b * b;
               bb = 2 * a * b;
             } else if (selectedFunction=="zPowerZ"){
-              aa = Math.exp(a/2*Math.log(a*a+b*b)-b*Math.atan(b/a))*Math.sin(a*Math.atan(b/a)+b/2*Math.log(a*a+b*b));
-              bb = Math.exp(a/2*Math.log(a*a+b*b)-b*Math.atan(b/a))*Math.cos(a*Math.atan(b/a)+b/2*Math.log(a*a+b*b));
+              aa = Math.exp(a/2*Math.log(a*a+b*b)-b*atan3(b,a))*Math.sin(a*atan3(b,a)+b/2*Math.log(a*a+b*b));
+              bb = Math.exp(a/2*Math.log(a*a+b*b)-b*atan3(b,a))*Math.cos(a*atan3(b,a)+b/2*Math.log(a*a+b*b));
             } else if (selectedFunction=='ePowerZ'){
               aa = Math.exp(a)*Math.cos(b);
               bb = Math.exp(a)*sin(b);
@@ -280,8 +295,11 @@
               aa = Math.cosh(a)*Math.cosh(b);
               bb = Math.sinh(a)*Math.sin(b);
             } else if(selectedFunction=="zPowerN"){
-              aa = ((a**2+b**2)**(parseFloat(document.getElementById('FuncVar').value)/2))*Math.cos(parseFloat(document.getElementById('FuncVar').value)*Math.atan(b/a));
-              bb = ((a**2+b**2)**(parseFloat(document.getElementById('FuncVar').value)/2))*Math.sin(parseFloat(document.getElementById('FuncVar').value)*Math.atan(b/a));
+              aa = ((a**2+b**2)**(parseFloat(document.getElementById('FuncVar').value)/2))*Math.cos(parseFloat(document.getElementById('FuncVar').value)*atan3(b,a));
+              bb = ((a**2+b**2)**(parseFloat(document.getElementById('FuncVar').value)/2))*Math.sin(parseFloat(document.getElementById('FuncVar').value)*atan3(b,a));
+            } else if (selectedFunction=="zPower1Z") {
+              aa = (Math.exp((a*Math.log((a**2)+(b**2))+2*b*atan3(b,a))/(2*((a**2)+(b**2))))*Math.cos((2*a*atan3(b,a)-b*Math.log((a**2)+(b**2)))/(2*((a**2)+(b**2)))));
+              bb = (Math.exp((a*Math.log((a**2)+(b**2))+2*b*atan3(b,a))/(2*((a**2)+(b**2))))*Math.sin((2*a*atan3(b,a)-b*Math.log((a**2)+(b**2)))/(2*((a**2)+(b**2)))));
             };
             if (selectedSign=="plus"){
               a = (aa) + (ca);
@@ -384,17 +402,24 @@
       }
     }
     document.body.addEventListener("keydown",(ev) => {
+        console.log(ev)
       if(ev.key=="ArrowLeft"){
-        document.getElementById('XInput').value = parseFloat(document.getElementById('XInput').value)-width/4/height;
+        document.getElementById('XInput').value = parseFloat(document.getElementById('XInput').value)-width/(2*height*parseFloat(document.getElementById('ZoomInput').value));
       visualise();
       }else if(ev.key=="ArrowRight"){
-        document.getElementById('XInput').value = parseFloat(document.getElementById('XInput').value)+width/4/height;
+        document.getElementById('XInput').value = parseFloat(document.getElementById('XInput').value)+width/(2*height*parseFloat(document.getElementById('ZoomInput').value));
       visualise();
-      }if(ev.key=="ArrowUp"){
-        document.getElementById('YInput').value = parseFloat(document.getElementById('YInput').value)+1/4;
+      }else if(ev.key=="ArrowUp"){
+        document.getElementById('YInput').value = parseFloat(document.getElementById('YInput').value)+1/2/parseFloat(document.getElementById('ZoomInput').value);
       visualise();
-      }if(ev.key=="ArrowDown"){
-        document.getElementById('YInput').value = parseFloat(document.getElementById('YInput').value)-1/4;
+      }else if(ev.key=="ArrowDown"){
+        document.getElementById('YInput').value = parseFloat(document.getElementById('YInput').value)-1/2/parseFloat(document.getElementById('ZoomInput').value);
+      visualise();
+      }else if(ev.key=="-"){
+        document.getElementById('ZoomInput').value = parseFloat(document.getElementById('ZoomInput').value)-0.5*parseFloat(document.getElementById('ZoomInput').value);
+      visualise();
+      }else if(ev.key=="="){
+        document.getElementById('ZoomInput').value = parseFloat(document.getElementById('ZoomInput').value)+0.5*parseFloat(document.getElementById('ZoomInput').value);
       visualise();
       };
     });
