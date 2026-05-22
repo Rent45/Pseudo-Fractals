@@ -9,12 +9,13 @@
       margin: 0;
       padding: 0;
       display: flex;
-      background-color: #111; /* Dark background highlights the fractal */
     }
     main {
-      /* Main container holding the fractal canvas */
-      position: relative;
-      left: 150px;
+      /* Pushes the canvas exactly past the 320px sidebar */
+      margin-left: 320px; 
+      /* Ensures the canvas container takes up exactly the rest of the screen */
+      width: calc(100vw - 320px); 
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
