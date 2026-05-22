@@ -108,6 +108,9 @@
       <option value="multiply">*</option>
       <option value="divide">/</option>
       <option value="power">^</option>
+      <option value="multiply_componentwise">* (componentwise)</option>
+      <option value="divide_componentwise">/ (componentwise)</option>
+      <option value="power_componentwise">^ (componentwise)</option>
     </select>
     
     <input type="number" id="FuncVar" placeholder="Enter n (decimals for fractions)" hidden style="margin-top: 10px;">
@@ -204,7 +207,7 @@
 
     function randomise() {
       const funcs = ["zSquared", "sinZ", "cosZ", "ePowerZ", "nPowerZ", "zPowerN", "zPowerZ", "zPower1Z", "sinhz", "coshz"];
-      const signs = ["plus", "minus", "multiply", "divide", "power"];
+      const signs = ["plus", "minus", "multiply", "divide", "power", "multiply_componentwise", "divide_componentwise", "power_componentwise"];
       
       const fSel = funcs[Math.floor(Math.random() * funcs.length)];
       document.getElementById('functionSelector').value = fSel;
@@ -382,9 +385,22 @@
             switch (sSign) {
               case "plus":     a = aa + ca; b = bb + cb; break;
               case "minus":    a = aa - ca; b = bb - cb; break;
-              case "multiply": a = aa * ca; b = bb * cb; break;
-              case "divide":   a = aa / ca; b = bb / cb; break;
-              case "power":    a = aa ** ca; b = bb ** cb; break;
+              case "multiply": a = (aa * ca) - (bb * cb); b = (aa * cb) + (bb * ca); break;
+              case "divide":   a = (aa * ca + bb * cb) / (ca * ca + cb * cb); b = (bb * ca - aa * cb) / (ca * ca + cb * cb); break;
+              case "power":    if (aa * aa + bb * bb === 0) {a = 0; b = 0;} else {
+                const L = 0.5 * Math.log(aa * aa + bb * bb);
+                const theta = Math.atan2(bb, aa);
+                
+                const U = ca * L - cb * theta;
+                const V = ca * theta + cb * L;
+                
+                const expU = Math.exp(U);
+                a = expU * Math.cos(V);
+                b = expU * Math.sin(V);
+              }
+              case "multiply_componentwise": a = aa * ca; b = bb * cb; break;
+              case "divide_componentwise":   a = aa / ca; b = bb / cb; break;
+              case "power_componentwise":    a = aa ** ca; b = bb ** cb; break;
             }
             
             modSq = a*a + b*b; // Re-evaluate modulus for next loop
