@@ -10,10 +10,10 @@
       padding: 0;
       display: flex;
     }
-      main{
-        position: relative;
-        left: 150px;
-      }
+    main {
+      position: relative;
+      left: 150px;
+    }
     #settings {
       padding: 33px;
       box-sizing: border-box;
@@ -22,10 +22,8 @@
       border-radius: 5px;
       margin-right: -133px;
     }
-    #RandomButton{
-
-    }
-    #VisualButton{
+    #RandomButton { }
+    #VisualButton {
       width: 100%;
       letter-spacing: 4px;
       font-size: larger;
@@ -36,7 +34,6 @@
       margin-bottom: 5px;
       color: #333;
     }
-
     input, select {
       width: 100%;
       padding: 8px;
@@ -45,7 +42,6 @@
       border: 1px solid #ccc;
       border-radius: 3px;
     }
-
     button {
       background-color: #4CAF50;
       color: white;
@@ -55,7 +51,6 @@
       cursor: pointer;
       margin-bottom: 10px;
     }
-
     button:hover {
       background-color: #45a049;
     }
@@ -63,179 +58,166 @@
 </head>
 <body>
   <div id="settings">
-  <button id='VisualButton' onclick="visualise()">Visualise</button>
-  <br>
-  <button id='RandomButton' onclick="randomise()">Randomise</button>
-  <button id='HELP' onclick="needhelp()">Help me!</button>
-  <br>
-  <select id="functionSelector" onchange="if($(document.getElementById('FuncVar')).is(':hidden') && (document.getElementById('functionSelector').value == 'nPowerZ' || document.getElementById('functionSelector').value == 'zPowerN')){$('#FuncVar').show();}else if(!(document.getElementById('functionSelector').value == 'nPowerZ' || document.getElementById('functionSelector').value == 'zPowerN')){$('#FuncVar').hide();};">
-    <option value="zSquared">z^2</option>
-    <option value="sinZ">sin(z)</option>
-    <option value="cosZ">cos(z)</option>
-    <option value="ePowerZ">e^z</option>
-    <option value="nPowerZ">n^z</option>
-    <option value="zPowerN">z^n</option>
-    <option value="zPowerZ">z^z</option>
-    <option value="zPower1Z">z^(1/z)</option>
-    <option value="sinhz">sinhz</option>
-    <option value="coshz">coshz</option>
-  </select>
+    <button id="VisualButton" onclick="visualise()">Visualise</button>
+    <br>
+    <button id="RandomButton" onclick="randomise()">Randomise</button>
+    <button id="HELP" onclick="needhelp()">Help me!</button>
+    <br>
+     <select id="functionSelector" onchange="document.getElementById('FuncVar').hidden = !(this.value === 'nPowerZ' || this.value === 'zPowerN')">
+      <option value="zSquared">z^2</option>
+      <option value="sinZ">sin(z)</option>
+      <option value="cosZ">cos(z)</option>
+      <option value="ePowerZ">e^z</option>
+      <option value="nPowerZ">n^z</option>
+      <option value="zPowerN">z^n</option>
+      <option value="zPowerZ">z^z</option>
+      <option value="zPower1Z">z^(1/z)</option>
+      <option value="sinhz">sinhz</option>
+      <option value="coshz">coshz</option>
+    </select>
 
-  <select id="signSelector">
-    <option value="plus">+</option>
-    <option value="minus">-</option>
-    <option value="multiply">*</option>
-    <option value="divide">/</option>
-    <option value="power">^</option>
-  </select>
-  <br>
-  <input type="text" id="FuncVar" placeholder="Enter n (use decimals for fractions)" hidden>
-  <br>
-  <label onclick="randomWidth();" for="widthInput">Picture Width:</label>
-  <input type="number" id="widthInput" value="750">
-
-  <label onclick="randomHeight();" for="heightInput">Picture Height:</label>
-  <input type="number" id="heightInput" value="500">
-  <br>
-  <label onclick="randomMaxV();" for="MaxVal">Max Absolute Value:</label>
-  <input type="number" id="MaxVal" value="5">
-
-  <label onclick="randomMaxI();" for="MaxIt">Max Iterations:</label>
-  <input type="number" id="MaxIt" value="20">
-  <br>
-  <label onclick="randomZoom();" for="ZoomInput">Zoom:</label>
-  <input type="number" id="ZoomInput" value="0.9">
-
-  <label onclick="randomX();" for="XInput">X offset:</label>
-  <input type="number" id="XInput" value="-0.5">
-
-  <label onclick="randomY();" for="YInput">Y Offset:</label>
-  <input type="number" id="YInput" value="0">
-  <br>
-  <label id="Red11" onclick="randomColor(1.1);" for="Red1">Far from set, red colour:</label>
-  <input type="number" id="Red1" value="0">
-
-  <label id="Green11" onclick="randomColor(2.1);" for="Green1">Far from set, green colour:</label>
-  <input type="number" id="Green1" value="225">
-
-  <label id="Blue11" onclick="randomColor(0.1);" for="Blue1">Far from set, blue colour:</label>
-  <input type="number" id="Blue1" value="255">
-  <br>
-  <label id="Red22" onclick="randomColor(1.2);" for="Red2">Close to set red, colour:</label>
-  <input type="number" id="Red2" value="255">
-
-  <label id="Green22" onclick="randomColor(2.2);" for="Green2">Close to set, green colour:</label>
-  <input type="number" id="Green2" value="225">
-
-  <label id="Blue22" onclick="randomColor(0.2);" for="Blue2">Close to set, blue colour:</label>
-  <input type="number" id="Blue2" value="0">
-  <br>
-  <label id="Red33" onclick="randomColor(1.3);" for="Red3">In set red, colour:</label>
-  <input type="number" id="Red3" value="0">
-
-  <label id="Green33" onclick="randomColor(2.3);" for="Green3">In set, green colour:</label>
-  <input type="number" id="Green3" value="0">
-
-  <label id="Blue33" onclick="randomColor(0.3);" for="Blue3">In set, blue colour:</label>
-  <input type="number" id="Blue3" value="75">
+    <select id="signSelector">
+      <option value="plus">+</option>
+      <option value="minus">-</option>
+      <option value="multiply">*</option>
+      <option value="divide">/</option>
+      <option value="power">^</option>
+    </select>
+    <br>
+    <input type="text" id="FuncVar" placeholder="Enter n (use decimals for fractions)" hidden>
+    <br>
+    <label onclick="randomWidth();" for="widthInput">Picture Width:</label>
+    <input type="number" id="widthInput" value="750">
+    
+    <label onclick="randomHeight();" for="heightInput">Picture Height:</label>
+    <input type="number" id="heightInput" value="500">
+    <br>
+    <label onclick="randomMaxV();" for="MaxVal">Max Absolute Value:</label>
+    <input type="number" id="MaxVal" value="5">
+    
+    <label onclick="randomMaxI();" for="MaxIt">Max Iterations:</label>
+    <input type="number" id="MaxIt" value="20">
+    <br>
+    <label onclick="randomZoom();" for="ZoomInput">Zoom:</label>
+    <input type="number" id="ZoomInput" value="0.9">
+    
+    <label onclick="randomX();" for="XInput">X offset:</label>
+    <input type="number" id="XInput" value="-0.5">
+    
+    <label onclick="randomY();" for="YInput">Y Offset:</label>
+    <input type="number" id="YInput" value="0">
+    <br>
+    <label id="Red11" onclick="randomColor(1,1);" for="Red1">Far from set, red colour:</label>
+    <input type="number" id="Red1" value="0">
+    
+    <label id="Green11" onclick="randomColor(2,1);" for="Green1">Far from set, green colour:</label>
+    <input type="number" id="Green1" value="225">
+    
+    <label id="Blue11" onclick="randomColor(0,1);" for="Blue1">Far from set, blue colour:</label>
+    <input type="number" id="Blue1" value="255">
+    <br>
+    <label id="Red22" onclick="randomColor(1,2);" for="Red2">Close to set red, colour:</label>
+    <input type="number" id="Red2" value="255">
+    
+    <label id="Green22" onclick="randomColor(2,2);" for="Green2">Close to set, green colour:</label>
+    <input type="number" id="Green2" value="225">
+    
+    <label id="Blue22" onclick="randomColor(0,2);" for="Blue2">Close to set, blue colour:</label>
+    <input type="number" id="Blue2" value="0">
+    <br>
+    <label id="Red33" onclick="randomColor(1,3);" for="Red3">In set red, colour:</label>
+    <input type="number" id="Red3" value="0">
+    
+    <label id="Green33" onclick="randomColor(2,3);" for="Green3">In set, green colour:</label>
+    <input type="number" id="Green3" value="0">
+    
+    <label id="Blue33" onclick="randomColor(0,3);" for="Blue3">In set, blue colour:</label>
+    <input type="number" id="Blue3" value="75">
   </div>
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
-  <script>
-    function needhelp() {
-      alert("Hey there, here's a brief instruction and explanation of what this website is and does.");
-      alert("Firstly, the generation is quite slow, so you can do something else while the set is generating.");
-      alert("What we are doing here is taking a complex number a+bi, applying a function to it and +/-/* etc itself to what we get.");
-      alert("We reapeat this algorithm several times (Maxt Iterations) and see if it crosses 'Max absolute value'.");
-      alert("If it doesn't cross, it is in set. The less iterations it took to cross the absolute value, the further it is from set. You can adjust all the colors.");
-      alert("From 1 to infinity zoom makes the graph bigger, from 1 to 0 - smaller.");
-      alert("By pressing the arrows on your keyboard, you can move and by pressing '-' or '=' you can zoom in or out.");
-      alert("By pressing the text, you can change the parameter near it.");
-      alert("Whith functions containing 'n', you can input the contant. Don't forget to use decimals for fractions (e.g. instead of 1/2 writ 0.5)");
-    };
-    for (let i = 2; i >= 0; i--) {
-  for (let j = 3; j >= 1; j--) {
-    let colors = ["Blue", "Red", "Green"];
-    let input = document.getElementById(colors[i] + j);
-      let redVal = parseInt(document.getElementById('Red' + j).value);
-      let greenVal = parseInt(document.getElementById('Green' + j).value);
-      let blueVal = parseInt(document.getElementById('Blue' + j).value);
 
-      for (let d = 0; d <= 2; d++) {
-        let targetElem = document.getElementById(colors[d] + j + j);
-        targetElem.style.color = `rgb(${redVal}, ${greenVal}, ${blueVal})`;
-        // console.log(targetElem.style.color);
-        // console.log(targetElem);
-      };
-    }
-  };
-  function atan3(b,a) {
-    if(a>0){
-      return Math.atan(b/a);
-    }else if (a<0 && b>=0){
-      return (Math.PI+Math.atan(b/a));
-    } else if (a<0 && b<0){
-      return (Math.atan(b/a)-Math.PI);
-    } else if (a==0 && b>0) {
-      return (Math.PI/2);
-    } else if (a==0 && b<0){
-      return (-Math.PI/2);
-    } else {
-      return 0;
-    };
-  };
-    let width = parseInt(document.getElementById('widthInput').value);
-    let height = parseInt(document.getElementById('heightInput').value);
+  <!-- External libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+
+  <script>
+    /* Global variables and helper constants */
+    const colors = ["Blue", "Red", "Green"];
     let textValx = [];
     let textValy = [];
     let importantx = [];
     let importanty = [];
     let counter = 0;
-    let selectedFunction = document.getElementById('functionSelector').value;
-    // console.log(selectedFunction)
+    let selectedFunction;
+    let selectedSign;
+
+    // Helper function for computing the angle of a complex number.
+    function atan3(b, a) {
+      if (a > 0) {
+        return Math.atan(b / a);
+      } else if (a < 0 && b >= 0) {
+        return Math.PI + Math.atan(b / a);
+      } else if (a < 0 && b < 0) {
+        return Math.atan(b / a) - Math.PI;
+      } else if (a === 0 && b > 0) {
+        return Math.PI / 2;
+      } else if (a === 0 && b < 0) {
+        return -Math.PI / 2;
+      } else {
+        return 0;
+      }
+    }
+
+    // p5.js setup
     function setup() {
-      let canvas = createCanvas(width, height);
+      const w = parseInt(document.getElementById('widthInput').value, 10);
+      const h = parseInt(document.getElementById('heightInput').value, 10);
+      createCanvas(w, h);
       pixelDensity(1);
-    };
+    }
+
+    // If called with a single numeric parameter (e.g. 1.1), split it into two parts.
     function randomColor(i, j) {
-      let colors = ["Blue", "Red", "Green"];
-      let input = document.getElementById(colors[i] + j);
-      input.value = Math.round(10 * 255 * Math.random()) / 10;
-      for (let d = 0; d <= 2; d++) {
-        let redVal = parseInt(document.getElementById('Red' + j).value);
-        let greenVal = parseInt(document.getElementById('Green' + j).value);
-        let blueVal = parseInt(document.getElementById('Blue' + j).value);
-        let targetElem = document.getElementById(colors[d] + j + j);
+      const inputElem = document.getElementById(colors[i] + j);
+      inputElem.value = Math.round(Math.random() * 255 * 10) / 10;
+      for (let d = 0; d < colors.length; d++) {
+        const redVal = parseInt(document.getElementById('Red' + j).value, 10);
+        const greenVal = parseInt(document.getElementById('Green' + j).value, 10);
+        const blueVal = parseInt(document.getElementById('Blue' + j).value, 10);
+        const targetElem = document.getElementById(colors[d] + j + j);
         targetElem.style.color = `rgb(${redVal}, ${greenVal}, ${blueVal})`;
       }
     }
+
+    // Randomisation functions for various inputs
     function randomWidth() {
-      document.getElementById('widthInput').value = Math.floor(Math.random()*1500+500);
-    };
+      document.getElementById('widthInput').value = Math.floor(Math.random() * 1500 + 500);
+    }
     function randomHeight() {
-      document.getElementById('heightInput').value = Math.floor(Math.random()*1500+500)
-    };
+      document.getElementById('heightInput').value = Math.floor(Math.random() * 1500 + 500);
+    }
     function randomMaxV() {
-      document.getElementById('MaxVal').value = Math.round(10*Math.random()*30)/10;
-    };
+      document.getElementById('MaxVal').value = Math.round(Math.random() * 30 * 10) / 10;
+    }
     function randomMaxI() {
-      document.getElementById('MaxIt').value = Math.floor(Math.random()*60);
-    };
+      document.getElementById('MaxIt').value = Math.floor(Math.random() * 60);
+    }
     function randomZoom() {
-      document.getElementById('ZoomInput').value = Math.round(100*(Math.random() * 5))/100;
-    };
+      document.getElementById('ZoomInput').value = Math.round(Math.random() * 5 * 100) / 100;
+    }
     function randomX() {
-      document.getElementById('XInput').value = Math.round(100*(Math.random() * (4) - 2))/100;
-    };
+      document.getElementById('XInput').value = Math.round((Math.random() * 4 - 2) * 100) / 100;
+    }
     function randomY() {
-      document.getElementById('YInput').value = Math.round(100*(Math.random() * (4) - 2))/100;
-    };
+      document.getElementById('YInput').value = Math.round((Math.random() * 4 - 2) * 100) / 100;
+    }
+
+    // Randomise many parameters at once
     function randomise() {
-      let funcs = ["zSquared","sinZ","cosZ","ePowerZ","nPowerZ","zPowerN","zPowerZ","zPower1Z","sinhz","coshz"];
-      while (true){
-      document.getElementById('functionSelector').value = funcs[Math.floor(Math.random()*10)];if(!(document.getElementById('functionSelector').value == '')){break;}};
-      let signs = ["plus","minus","multiply","divide",'power'];
-      document.getElementById('signSelector').value = signs[Math.floor(Math.random()*5)];
+      const funcs = ["zSquared", "sinZ", "cosZ", "ePowerZ", "nPowerZ", "zPowerN", "zPowerZ", "zPower1Z", "sinhz", "coshz"];
+      document.getElementById('functionSelector').value = funcs[Math.floor(Math.random() * funcs.length)];
+      
+      const signs = ["plus", "minus", "multiply", "divide", "power"];
+      document.getElementById('signSelector').value = signs[Math.floor(Math.random() * signs.length)];
+
       randomWidth();
       randomHeight();
       randomMaxV();
@@ -243,232 +225,294 @@
       randomZoom();
       randomX();
       randomY();
-      if($(document.getElementById('FuncVar')).is(':hidden') && (document.getElementById('functionSelector').value == 'nPowerZ' || document.getElementById('functionSelector').value == 'zPowerN')){$('#FuncVar').show();
-      document.getElementById('FuncVar').value = Math.round(10*(Math.random()*30-10))/10;}else {$('#FuncVar').hide();};
-      for (var i = 0; i <= 2; i++) {
-        for (var j = 1; j <= 3; j++) {
-          randomColor(i,j)
+
+      if ($('#FuncVar').is(':hidden') && 
+          (document.getElementById('functionSelector').value === 'nPowerZ' ||
+           document.getElementById('functionSelector').value === 'zPowerN')) {
+        $('#FuncVar').show();
+        document.getElementById('FuncVar').value = Math.round((Math.random() * 20 - 10) * 10) / 10;
+      } else {
+        $('#FuncVar').hide();
+      }
+      // Update all colour inputs
+      for (let i = 0; i < colors.length; i++) {
+        for (let j = 1; j <= 3; j++) {
+          randomColor(i, j);
         }
       }
     }
-    function ChangeCanvas() {
-      resizeCanvas(width, height);
-      loadPixels();
-      clear();
 
-      for (let x = 0; x <= width; x++) {
-        for (let y = 0; y <= height; y++) {
-          let a = map(x, 0, width, -width/height, width/height)/parseFloat(document.getElementById('ZoomInput').value)+parseFloat(document.getElementById('XInput').value);
-          let b = map(y, 0, height, -1, 1)/parseFloat(document.getElementById('ZoomInput').value)-parseFloat(document.getElementById('YInput').value);
-          let ca = a;
-          let cb = b;
+    // The main drawing routine – creates or updates the canvas pixels.
+    function ChangeCanvas() {
+      // Cache current input values
+      const canvasWidth = parseInt(document.getElementById('widthInput').value, 10);
+      const canvasHeight = parseInt(document.getElementById('heightInput').value, 10);
+      resizeCanvas(canvasWidth, canvasHeight);
+      clear();
+      loadPixels();
+      
+      const zoom = parseFloat(document.getElementById('ZoomInput').value);
+      const offsetX = parseFloat(document.getElementById('XInput').value);
+      const offsetY = parseFloat(document.getElementById('YInput').value);
+      const maxVal = parseFloat(document.getElementById('MaxVal').value);
+      const maxIt = parseFloat(document.getElementById('MaxIt').value);
+      const stepXY = 2 / (canvasWidth * zoom);
+      const startA = (-canvasWidth / canvasWidth) / zoom + offsetX;
+      const nVal = parseFloat(document.getElementById('FuncVar').value) || 0;
+      const lnNVal = Math.log(nVal);
+      // Read the DOM inputs before the loop
+      const r1 = parseFloat(document.getElementById("Red1").value);
+      const g1 = parseFloat(document.getElementById("Green1").value);
+      const b1 = parseFloat(document.getElementById("Blue1").value);
+      const r2 = parseFloat(document.getElementById("Red2").value);
+      const g2 = parseFloat(document.getElementById("Green2").value);
+      const b2 = parseFloat(document.getElementById("Blue2").value);
+      const r3 = parseFloat(document.getElementById("Red3").value);
+      const g3 = parseFloat(document.getElementById("Green3").value);
+      const b3 = parseFloat(document.getElementById("Blue3").value);
+      // Create a Typed Array to hold R, G, and B for every possible iteration
+      // A Uint8Array is heavily optimized by the browser and automatically clamps values between 0 and 255
+      const palette = new Uint8Array(maxIt * 3);
+      // Pre-calculate the gradient
+      for (let i = 0; i < maxIt; i++) {
+        // 't' is a percentage from 0.0 to 1.0 representing how close we are to maxIt
+        const t = maxIt > 1 ? i / (maxIt - 1) : 0;
+          // Lerp formula: start + (end - start) * percentage
+        palette[i * 3]     = r1 + (r2 - r1) * t; // Red
+        palette[i * 3 + 1] = g1 + (g2 - g1) * t; // Green
+        palette[i * 3 + 2] = b1 + (b2 - b1) * t; // Blue
+      }      
+      
+      selectedFunction = document.getElementById('functionSelector').value;
+      selectedSign = document.getElementById('signSelector').value;
+      
+      // Loop over each pixel on the canvas
+      for (let x = 0; x < canvasWidth; x++) {
+        for (let y = 0; y < canvasHeight; y++) {
+          const a = startA + x * stepXY;
+          let b = map(y, 0, canvasHeight, -1, 1) / zoom - offsetY;
+          const ca = a;
+          const cb = b;
           let n = 0;
-          while (Math.abs(a)+Math.abs(b) <= parseFloat(document.getElementById('MaxVal').value) && n < parseFloat(document.getElementById('MaxIt').value)) {
+          let aa, bb;
+          
+          // Iteratively apply the chosen complex function
+          while (Math.abs(a) + Math.abs(b) <= maxVal && n < maxIt) {
             n++;
-            let aa, bb;
-            selectedFunction = document.getElementById('functionSelector').value;
-            // console.log(selectedFunction)
-            // console.log(selectedSign)
-            if (selectedFunction=="sinZ"){
-              aa = (Math.sin(a))*(Math.cosh(b));
-              bb = (Math.cos(a))*(Math.sinh(b));
-            } else if (selectedFunction=="cosZ"){
-              aa = (Math.cos(a))*Math.cosh(b);
-              bb = -((Math.sin(a))*(Math.sinh(b)));
-            } else if (selectedFunction=="zSquared"){
+            if (selectedFunction === "sinZ") {
+              aa = Math.sin(a) * Math.cosh(b);
+              bb = Math.cos(a) * Math.sinh(b);
+            } else if (selectedFunction === "cosZ") {
+              aa = Math.cos(a) * Math.cosh(b);
+              bb = -Math.sin(a) * Math.sinh(b);
+            } else if (selectedFunction === "zSquared") {
               aa = a * a - b * b;
               bb = 2 * a * b;
-            } else if (selectedFunction=="zPowerZ"){
-              aa = Math.exp(a/2*Math.log(a*a+b*b)-b*atan3(b,a))*Math.sin(a*atan3(b,a)+b/2*Math.log(a*a+b*b));
-              bb = Math.exp(a/2*Math.log(a*a+b*b)-b*atan3(b,a))*Math.cos(a*atan3(b,a)+b/2*Math.log(a*a+b*b));
-            } else if (selectedFunction=='ePowerZ'){
-              aa = Math.exp(a)*Math.cos(b);
-              bb = Math.exp(a)*sin(b);
-            } else if (selectedFunction=='nPowerZ'){
-              aa = ((parseFloat(document.getElementById('FuncVar').value))**(a))*Math.cos(b*Math.log(parseFloat(document.getElementById('FuncVar').value)));
-              bb = ((parseFloat(document.getElementById('FuncVar').value))**(a))*Math.sin(b*Math.log(parseFloat(document.getElementById('FuncVar').value)));
-              //-1/2 - the same as -1 ; -(1/2) gives no output; -0.5 - something fancy.
-            } else if(selectedFunction=="sinhz"){
-              aa = Math.sinh(a)*Math.cos(b);
-              bb = Math.cosh(a)*Math.sin(b);
-            } else if(selectedFunction=="coshz"){
-              aa = Math.cosh(a)*Math.cosh(b);
-              bb = Math.sinh(a)*Math.sin(b);
-            } else if(selectedFunction=="zPowerN"){
-              aa = ((a**2+b**2)**(parseFloat(document.getElementById('FuncVar').value)/2))*Math.cos(parseFloat(document.getElementById('FuncVar').value)*atan3(b,a));
-              bb = ((a**2+b**2)**(parseFloat(document.getElementById('FuncVar').value)/2))*Math.sin(parseFloat(document.getElementById('FuncVar').value)*atan3(b,a));
-            } else if (selectedFunction=="zPower1Z") {
-              aa = (Math.exp((a*Math.log((a**2)+(b**2))+2*b*atan3(b,a))/(2*((a**2)+(b**2))))*Math.cos((2*a*atan3(b,a)-b*Math.log((a**2)+(b**2)))/(2*((a**2)+(b**2)))));
-              bb = (Math.exp((a*Math.log((a**2)+(b**2))+2*b*atan3(b,a))/(2*((a**2)+(b**2))))*Math.sin((2*a*atan3(b,a)-b*Math.log((a**2)+(b**2)))/(2*((a**2)+(b**2)))));
-            };
-            if (selectedSign=="plus"){
-              a = (aa) + (ca);
-              b = (bb) + (cb);
-            } else if (selectedSign=="minus"){
-              a = (aa) - (ca);
-              b = (bb) - (cb);
-            } else if (selectedSign=="multiply"){
-              a = (aa) * (ca);
-              b = (bb) * (cb);
-            } else if (selectedSign=="divide"){
-              a = (aa) / (ca);
-              b = (bb) / (cb);
-            } else if (selectedSign=="power"){
-              a = (aa) ** (ca);
-              b = (bb) ** (cb);
-            };
+            } else if (selectedFunction === "zPowerZ") {
+              const theta = atan3(b, a);
+              aa = Math.exp(a / 2 * Math.log(a * a + b * b) - b * theta) *
+                   Math.cos(a * theta + b / 2 * Math.log(a * a + b * b));
+              bb = Math.exp(a / 2 * Math.log(a * a + b * b) - b * theta) *
+                   Math.sin(a * theta + b / 2 * Math.log(a * a + b * b));
+            } else if (selectedFunction === "ePowerZ") {
+              aa = Math.exp(a) * Math.cos(b);
+              bb = Math.exp(a) * Math.sin(b);
+            } else if (selectedFunction === "nPowerZ") {
+              aa = (nVal ** a) * Math.cos(b * lnNVal);
+              bb = (nVal ** a) * Math.sin(b * lnNVal);
+            } else if (selectedFunction === "sinhz") {
+              aa = Math.sinh(a) * Math.cos(b);
+              bb = Math.cosh(a) * Math.sin(b);
+            } else if (selectedFunction === "coshz") {
+              aa = Math.cosh(a) * Math.cosh(b);
+              bb = Math.sinh(a) * Math.sin(b);
+            } else if (selectedFunction === "zPowerN") {
+              const theta = atan3(b, a);
+              const modulus = Math.sqrt(a * a + b * b);
+              aa = (modulus ** nVal) * Math.cos(nVal * theta);
+              bb = (modulus ** nVal) * Math.sin(nVal * theta);
+            } else if (selectedFunction === "zPower1Z") {
+              const denominator = a * a + b * b;
+              aa = Math.exp((a * Math.log(denominator) + 2 * b * atan3(b, a)) / (2 * denominator)) *
+                   Math.cos((2 * a * atan3(b, a) - b * Math.log(denominator)) / (2 * denominator));
+              bb = Math.exp((a * Math.log(denominator) + 2 * b * atan3(b, a)) / (2 * denominator)) *
+                   Math.sin((2 * a * atan3(b, a) - b * Math.log(denominator)) / (2 * denominator));
+            }
+            
+            // Combine the result with the original point using the selected sign
+            if (selectedSign === "plus") {
+              a = aa + ca;
+              b = bb + cb;
+            } else if (selectedSign === "minus") {
+              a = aa - ca;
+              b = bb - cb;
+            } else if (selectedSign === "multiply") {
+              a = aa * ca;
+              b = bb * cb;
+            } else if (selectedSign === "divide") {
+              a = aa / ca;
+              b = bb / cb;
+            } else if (selectedSign === "power") {
+              a = aa ** ca;
+              b = bb ** cb;
+            }
           }
-          let pixelIndex = (x + y * width) * 4;
-          if(n<parseFloat(document.getElementById('MaxIt').value)){
-            pixels[pixelIndex] = red(map(n, 0, parseFloat(document.getElementById('MaxIt').value)-1, parseFloat(document.getElementById("Red1").value), parseFloat(document.getElementById("Red2").value)));
-            pixels[pixelIndex + 1] = green(map(n, 0, parseFloat(document.getElementById('MaxIt').value)-1, parseFloat(document.getElementById ("Green1").value), parseFloat(document.getElementById("Green2").value)));
-            pixels[pixelIndex + 2] = blue(map(n, 0, parseFloat(document.getElementById('MaxIt').value)-1, parseFloat(document.getElementById( "Blue1").value), parseFloat(document.getElementById("Blue2").value)));
+          
+          // Set pixel colour based on whether the maximum iteration was reached
+          const pixelIndex = (x + y * canvasWidth) * 4;
+          if (n < maxIt) {
+            pixels[pixelIndex]     = palette[n * 3];;
+            pixels[pixelIndex + 1] = palette[n * 3 + 1];
+            pixels[pixelIndex + 2] =palette[n * 3 + 2];
+            pixels[pixelIndex + 3] = 255;
+          } else {
+            pixels[pixelIndex]     = r3;
+            pixels[pixelIndex + 1] = g3;
+            pixels[pixelIndex + 2] = b3;
             pixels[pixelIndex + 3] = 255;
           }
-          else{
-            pixels[pixelIndex] = red(parseFloat(document.getElementById("Red3").value));
-            pixels[pixelIndex + 1] = green(parseFloat(document.getElementById("Green3").value));
-            pixels[pixelIndex + 2] = blue(parseFloat(document.getElementById("Blue3").value));
+          
+          // Draw the central axis in black if near the centre
+          if ((x > canvasWidth / 2 - 1 && x < canvasWidth / 2 + 1) ||
+              (y > canvasHeight / 2 - 1 && y < canvasHeight / 2 + 1)) {
+            pixels[pixelIndex]     = 0;
+            pixels[pixelIndex + 1] = 0;
+            pixels[pixelIndex + 2] = 0;
             pixels[pixelIndex + 3] = 255;
           }
-          if (x > width / 2 - 1 && x < width / 2 + 1 || y > height / 2 - 1 && y < height / 2 + 1) {
-            pixels[pixelIndex] = red(0);
-            pixels[pixelIndex + 1] = green(0);
-            pixels[pixelIndex + 2] = blue(0);
-            pixels[pixelIndex + 3] = 255;
-          }
-          width = parseInt(document.getElementById('widthInput').value);
-          height = parseInt(document.getElementById('heightInput').value);
-          let zoom = parseFloat(document.getElementById('ZoomInput').value);
-          if (y > height / 2 - 5 && y < height / 2 + 5 && x > 0 && x < width - 20 && x % 100 == 0) {
-            let mapped = map(x + 100, 0, width, -width / height, width / height) / zoom - map(x, 0, width, -width / height, width / height) / zoom;         
-            // console.log("mapped="+mapped)            
+          
+          // Collect x-axis markers (every 100 pixels near the horizontal centre)
+          if (y > canvasHeight / 2 - 5 && y < canvasHeight / 2 + 5 && x > 0 && x < canvasWidth - 20 && x % 100 === 0) {
             for (let k = -10; k <= 10; k++) {
+              const mapped = map(x + 100, 0, canvasWidth, -canvasWidth / canvasHeight, canvasWidth / canvasHeight) / zoom -
+                             map(x, 0, canvasWidth, -canvasWidth / canvasHeight, canvasWidth / canvasHeight) / zoom;
               if (mapped <= 10 ** k) {
-                // textAlign(LEFT);
-                if (k>=1){k=0}
-                textValx.push((Math.round(10 ** (-k + 1) * (map(x, 0, width, -width / height, width / height) / zoom+parseFloat(document.getElementById('XInput').value))) / 10 ** (-k + 1)).toString());
-                // console.log('Without k x '+(map(x, 0, width, -width / height, width / height) / zoom+parseFloat(document.getElementById('XInput').value)));
-                // console.log('With k x '+Math.round(10 ** (-k + 1) * (map(x, 0, width, -width / height, width / height) / zoom+parseFloat(document.getElementById('XInput').value))) / 10 ** (-k + 1));
-                // console.log("k="+k)
+                const effectiveK = (k >= 1) ? 0 : k;
+                textValx.push(
+                  (Math.round(10 ** (-effectiveK + 1) *
+                  (map(x, 0, canvasWidth, -canvasWidth / canvasHeight, canvasWidth / canvasHeight) / zoom + offsetX))
+                  / 10 ** (-effectiveK + 1)).toString()
+                );
                 importantx.push(x);
-                // console.log("After push x "+textValx+" "+importantx)
                 break;
               }
             }
-            }
-            if (x==width/2) {
-            // console.log(x+" "+width/2)
           }
-            if (x > width / 2 - 5 && x < width / 2 + 5 && y !== 0 && y < height - 20 && y % 100 == 0){
-            let mapped = map(y + 100, 0, height, -1, 1) / zoom - map(y, 0, height, -1, 1) / zoom; 
-            // console.log("mapped="+mapped)          
+          // Collect y-axis markers (every 100 pixels near the vertical centre)
+          if (x > canvasWidth / 2 - 5 && x < canvasWidth / 2 + 5 && y !== 0 && y < canvasHeight - 20 && y % 100 === 0) {
             for (let k = -10; k <= 10; k++) {
+              const mapped = map(y + 100, 0, canvasHeight, -1, 1) / zoom -
+                             map(y, 0, canvasHeight, -1, 1) / zoom;
               if (mapped <= 10 ** k) {
-                // textAlign(LEFT);
-                textValy.push((Math.round(10 ** (-k + 1) * (-map(y, 0, height, -1, 1) / zoom+parseFloat(document.getElementById('YInput').value))) / 10 ** (-k + 1)).toString());
-                // console.log(textValy);
-                // console.log('Without k y '+(map(y, 0, height, -1, 1)/zoom-parseFloat(document.getElementById('YInput').value)));
-                // console.log('With k y '+(Math.round(10 ** (-k + 1) * (map(y, 0, height, -1, 1) / zoom-parseFloat(document.getElementById('YInput').value))) / 10 ** (-k + 1)).toString());
-                // console.log("k="+k)
+                textValy.push(
+                  (Math.round(10 ** (-k + 1) *
+                  (-map(y, 0, canvasHeight, -1, 1) / zoom + offsetY))
+                  / 10 ** (-k + 1)).toString()
+                );
                 importanty.push(y);
-                // console.log("After push y "+textValy+" "+importanty)
                 break;
               }
             }
-          };
-        };
-      };
+          }
+        }
+      }
       updatePixels();
-      width = parseInt(document.getElementById('widthInput').value);
-      height = parseInt(document.getElementById('heightInput').value);
-      for (let i = importantx.length; i >=0; i--) {
+      
+      // Draw x-axis markers and labels
+      for (let i = importantx.length - 1; i >= 0; i--) {
         strokeWeight(2);
         stroke(0);
-        line(importantx[i], (height/2)-5,importantx[i], (height/2)+5);
+        line(importantx[i], canvasHeight / 2 - 5, importantx[i], canvasHeight / 2 + 5);
       }
-      for (let i = textValx.length; i >= 0; i--) {
-      fill(255);
-      text(textValx[i], importantx[i], height/2 + 20);
+      for (let i = textValx.length - 1; i >= 0; i--) {
+        fill(255);
+        text(textValx[i], importantx[i], canvasHeight / 2 + 20);
       }
-      for (let i = importanty.length; i >=0; i--) {
+      // Draw y-axis markers and labels
+      for (let i = importanty.length - 1; i >= 0; i--) {
         fill(0);
         stroke(0);
-        line((width/2)-5, importanty[i],(width/2)+5,importanty[i]);
+        line(canvasWidth / 2 - 5, importanty[i], canvasWidth / 2 + 5, importanty[i]);
       }
-      for (let i = textValy.length; i >= 0; i--) {
-      fill(255);
-      text(textValy[i]+'i', width/2 + 20,importanty[i]);
+      for (let i = textValy.length - 1; i >= 0; i--) {
+        fill(255);
+        text(textValy[i] + 'i', canvasWidth / 2 + 20, importanty[i]);
       }
     }
-    document.body.addEventListener("keydown",(ev) => {
-        console.log(ev)
-      if(ev.key=="ArrowLeft"){
-        document.getElementById('XInput').value = parseFloat(document.getElementById('XInput').value)-width/(2*height*parseFloat(document.getElementById('ZoomInput').value));
-      visualise();
-      }else if(ev.key=="ArrowRight"){
-        document.getElementById('XInput').value = parseFloat(document.getElementById('XInput').value)+width/(2*height*parseFloat(document.getElementById('ZoomInput').value));
-      visualise();
-      }else if(ev.key=="ArrowUp"){
-        document.getElementById('YInput').value = parseFloat(document.getElementById('YInput').value)+1/2/parseFloat(document.getElementById('ZoomInput').value);
-      visualise();
-      }else if(ev.key=="ArrowDown"){
-        document.getElementById('YInput').value = parseFloat(document.getElementById('YInput').value)-1/2/parseFloat(document.getElementById('ZoomInput').value);
-      visualise();
-      }else if(ev.key=="-"){
-        document.getElementById('ZoomInput').value = parseFloat(document.getElementById('ZoomInput').value)-0.5*parseFloat(document.getElementById('ZoomInput').value);
-      visualise();
-      }else if(ev.key=="="){
-        document.getElementById('ZoomInput').value = parseFloat(document.getElementById('ZoomInput').value)+0.5*parseFloat(document.getElementById('ZoomInput').value);
-      visualise();
-      };
-    });
-      for (let i = 2; i >= 0; i--) {
-  for (let j = 3; j >= 1; j--) {
-    let colors = ["Blue", "Red", "Green"];
-    let input = document.getElementById(colors[i] + j);
-    input.addEventListener("input", () => {
-      let redVal = parseInt(document.getElementById('Red' + j).value);
-      let greenVal = parseInt(document.getElementById('Green' + j).value);
-      let blueVal = parseInt(document.getElementById('Blue' + j).value);
 
-      for (let d = 0; d <= 2; d++) {
-        let targetElem = document.getElementById(colors[d] + j + j);
-        targetElem.style.color = `rgb(${redVal}, ${greenVal}, ${blueVal})`;
-        // console.log(targetElem.style.color);
-        // console.log(targetElem);
+    // Listen for key events to pan or zoom the fractal
+    document.body.addEventListener("keydown", (ev) => {
+      const zoomVal = parseFloat(document.getElementById('ZoomInput').value);
+      const widthVal = parseInt(document.getElementById('widthInput').value, 10);
+      const heightVal = parseInt(document.getElementById('heightInput').value, 10);
+      if (ev.key === "ArrowLeft") {
+        document.getElementById('XInput').value =
+          parseFloat(document.getElementById('XInput').value) - widthVal / (2 * heightVal * zoomVal);
+        visualise();
+      } else if (ev.key === "ArrowRight") {
+        document.getElementById('XInput').value =
+          parseFloat(document.getElementById('XInput').value) + widthVal / (2 * heightVal * zoomVal);
+        visualise();
+      } else if (ev.key === "ArrowUp") {
+        document.getElementById('YInput').value =
+          parseFloat(document.getElementById('YInput').value) + 1 / (2 * zoomVal);
+        visualise();
+      } else if (ev.key === "ArrowDown") {
+        document.getElementById('YInput').value =
+          parseFloat(document.getElementById('YInput').value) - 1 / (2 * zoomVal);
+        visualise();
+      } else if (ev.key === "-") {
+        document.getElementById('ZoomInput').value = zoomVal - 0.5 * zoomVal;
+        visualise();
+      } else if (ev.key === "=") {
+        document.getElementById('ZoomInput').value = zoomVal + 0.5 * zoomVal;
+        visualise();
       }
     });
-  }
-}
 
+    // Update colour labels when their inputs change
+    for (let i = 0; i < colors.length; i++) {
+      for (let j = 1; j <= 3; j++) {
+        const inputElem = document.getElementById(colors[i] + j);
+        inputElem.addEventListener("input", () => {
+          const redVal = parseInt(document.getElementById('Red' + j).value, 10);
+          const greenVal = parseInt(document.getElementById('Green' + j).value, 10);
+          const blueVal = parseInt(document.getElementById('Blue' + j).value, 10);
+          for (let d = 0; d < colors.length; d++) {
+            const targetElem = document.getElementById(colors[d] + j + j);
+            targetElem.style.color = `rgb(${redVal}, ${greenVal}, ${blueVal})`;
+          }
+        });
+      }
+    }
 
+    // The main function to re‐draw the fractal.
     function visualise() {
-      // console.log("Before clear, before shift"+textValx+importantx+textValy+importanty)
-      clear();
-      for (let i=textValx.length; i>=0; i--){
-        if (counter>=1) {
-          textValx.shift();
-          importantx.shift();
-          // console.log("shifted x "+textValx)
-        };
-      };
-      for (let i=textValy.length; i>=0; i--){
-        if (counter>=1) {
-          textValy.shift();
-          importanty.shift();
-          // console.log("shifted y "+textValy)
-        };
-      };
-      // console.log("After clear, after shift"+textValx+" "+importantx+" "+textValy+" "+importanty)
+      // Clear previously stored marker data.
+      if (counter >= 1) {
+        textValx = [];
+        importantx = [];
+        textValy = [];
+        importanty = [];
+      }
       counter++;
       selectedFunction = document.getElementById('functionSelector').value;
       selectedSign = document.getElementById('signSelector').value;
-      width = parseInt(document.getElementById('widthInput').value);
-      height = parseInt(document.getElementById('heightInput').value);
-      ChangeCanvas(); // Trigger draw() function again
+      ChangeCanvas();
     }
 
+    // Help dialog for users
+    function needhelp() {
+      alert("Hey there, here's a brief instruction and explanation of what this website is and does.");
+      alert("Firstly, the generation is quite slow, so you can do something else while the set is generating.");
+      alert("What we are doing here is taking a complex number a+bi, applying a function to it and +/-/* etc to what we get.");
+      alert("We repeat this algorithm several times (Max Iterations) and see if it crosses the 'Max absolute value'.");
+      alert("If it doesn't cross, it is in the set. The fewer iterations it took to cross the value, the further it is from the set. You can adjust all the colours.");
+      alert("From 1 to infinity, zoom makes the graph bigger; from 1 to 0, smaller.");
+      alert("By pressing the arrow keys, you can move; by pressing '-' or '=' you can zoom in or out.");
+      alert("By clicking the text next to each input, you can change the corresponding parameter.");
+      alert("With functions containing 'n', you can input the constant. Don't forget to use decimals for fractions (e.g. use 0.5 instead of 1/2).");
+    }
   </script>
 </body>
 </html>
