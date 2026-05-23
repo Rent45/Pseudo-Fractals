@@ -206,8 +206,8 @@
     function randomY() { document.getElementById('YInput').value = Math.round((Math.random() * 4 - 2) * 100) / 100; visualise(); }
 
     function randomise() {
-      const funcs = ["zSquared", "sinZ", "cosZ", "ePowerZ", "nPowerZ", "zPowerN", "zPowerZ", "zPower1Z", "sinhz", "coshz"];
-      const signs = ["plus", "minus", "multiply", "divide", "power", "multiply_componentwise", "divide_componentwise", "power_componentwise"];
+      const funcs = Array.from(document.getElementById('functionSelector').options).map(opt => opt.value);
+      const signs = Array.from(document.getElementById('signSelector').options).map(opt => opt.value);
       
       const fSel = funcs[Math.floor(Math.random() * funcs.length)];
       document.getElementById('functionSelector').value = fSel;
